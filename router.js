@@ -1,5 +1,4 @@
 import express from "express";
-const route = express.Router();
 import HomeController from "./Controller/HomeController.js";
 import { homeTransacoes } from "./Controller/TransacoesController.js";
 import {
@@ -17,6 +16,8 @@ import {
 import { LoginUser, Logout, refresh } from "./Controller/LoginController.js";
 import LoginRequired from "./Middleware/LoginRequired.js";
 import AuthGuard from "./Middleware/AuthUser.js";
+
+const route = express.Router();
 //Home
 route.get("/", LoginRequired, HomeController);
 

@@ -1,6 +1,7 @@
 import Transacao from "../Model/TransacaoModel.js";
+import User from "../Model/UserModel.js";
 export default async function home(req, res) {
-  const user = req.session.usuario;
+  const user = await User.findOne({ where: { id: 8 } });
 
   const transacoes = await Transacao.findAll({
     where: {
@@ -15,10 +16,11 @@ export default async function home(req, res) {
   let despesaTotal = 0;
   let receitaTotal = 0;
   const mesAtual = new Date().getMonth();
+  const anoAtual = new Date().getFullYear();
   const dadosCategoria = {};
 
   for (let i = 0; i < transacoes.length; i++) {
-    let dataTransação = new Date(transacoes[i].data);
+    let dataTransacao = new Date(transacoes[i].data);
 
     if (
       dataTransacao.getMonth() === mesAtual &&
@@ -70,9 +72,9 @@ export default async function home(req, res) {
   ];
   const ultimos6Meses = [];
   for (let i = 5; i >= 0; i--) {
-    let mesAtual = new Date();
-    mesAtual.setMonth(mesAtual.getMonth() - i);
-    ultimos6Meses.push(mesAtual.getMonth());
+    let d = new Date();
+    d.setMonth(d.getMonth() - i);
+    ultimos6Meses.push({ mes: d.getMonth(), ano: d.getFullYear() });
   }
 
   const dados6meses = {};
@@ -82,8 +84,11 @@ export default async function home(req, res) {
   //PEGA AS INFOS DE RECEITA E DESPESA DOS ULTIMOS 6 MESES
   for (let mes of ultimos6Meses) {
     for (let i = 0; i < transacoes.length; i++) {
-      let dataTransação = new Date(transacoes[i].data);
-      if (mes === dataTransação.getMonth()) {
+      let dataTransacao = new Date(transacoes[i].data);
+      if (
+        mes.mes === dataTransacao.getMonth() &&
+        mes.ano === dataTransacao.getFullYear()
+      ) {
         if (transacoes[i].tipo === "Despesa") {
           despesa += transacoes[i].valor;
         }
@@ -92,18 +97,17 @@ export default async function home(req, res) {
         }
       }
     }
-    dados6meses[meses[mes]] = { receita, despesa };
+    dados6meses[meses[mes.mes]] = { receita, despesa };
     receita = 0;
     despesa = 0;
   }
-  const context = {
+
+  return res.json({
     receitaMesAtual: receitaMesAtual.toFixed(2),
     despesaMesAtual: despesaMesAtual.toFixed(2),
     saldo: saldo.toFixed(2),
     dados6meses,
     dadosCategoria,
     user,
-  };
-
-  return res.render("home", { context, user });
+  });
 }
