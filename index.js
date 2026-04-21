@@ -4,12 +4,13 @@ import sincronizarTabelas from "./Model/index.js";
 import route from "./router.js";
 import session from "express-session";
 import flash from "connect-flash";
+import bearerToken from "express-bearer-token";
 
 // sincronizarTabelas();
 
 server.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.JWT_REFRESH_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -18,6 +19,7 @@ server.use(
     },
   }),
 );
+server.use(bearerToken());
 server.use(flash());
 server.use((req, res, next) => {
   res.locals.error = req.flash("error");

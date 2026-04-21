@@ -16,7 +16,7 @@ import {
   EditarUser,
   ApagarUser,
 } from "./Controller/UserController.js";
-import { LoginUser, LoginIndex, Logout } from "./Controller/LoginController.js";
+import { LoginUser, Logout, refresh } from "./Controller/LoginController.js";
 import LoginRequired from "./Middleware/LoginRequired.js";
 //Home
 route.get("/", LoginRequired, HomeController);
@@ -39,8 +39,12 @@ route.post("/user/:id", LoginRequired, EditarUser);
 route.delete("/user/delete/:id", LoginRequired, ApagarUser);
 
 //LoginUser
-route.get("/login", LoginIndex);
 route.post("/login", LoginUser);
 route.get("/logout", LoginRequired, Logout);
-
+route.post("/refresh", refresh);
+route.get("/teste", LoginRequired, teste);
 export default route;
+
+function teste(req, res) {
+  return res.json("Middleware Funcionando");
+}
