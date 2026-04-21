@@ -4,6 +4,11 @@ API REST do FinanceApp, sistema de gestão financeira pessoal. Permite
 cadastrar receitas/despesas, consultar saldo, filtrar transações e obter
 os dados agregados usados pelos gráficos do dashboard.
 
+> ⚠️ Sem instância pública no ar. Rode localmente seguindo [Como rodar](#-como-rodar-localmente).
+
+O frontend React que consome esta API:
+**[pedroszdev/financeApp-frontend](https://github.com/pedroszdev/financeApp-frontend)**.
+
 ## 🚀 Funcionalidades
 
 - **Autenticação JWT** — access token (15 min) + refresh token (7 dias),
@@ -33,10 +38,10 @@ os dados agregados usados pelos gráficos do dashboard.
 Pré-requisitos: Node.js 18+ e uma string de conexão PostgreSQL.
 
 ```bash
-git clone git@github.com:pedroszdev/Sistema-financero-js.git
-cd Sistema-financero-js
+git clone https://github.com/pedroszdev/Api-sistema-financero-js.git
+cd Api-sistema-financero-js
 npm install
-cp .env.example .env   # se não existir, crie manualmente — ver abaixo
+cp .env.example .env   # edite com suas credenciais — ver abaixo
 npm run dev            # nodemon index.js
 ```
 
@@ -181,8 +186,9 @@ Api-sistema-financero-js/
   bloqueados pelo browser no preflight. Em dev, o frontend usa o proxy do
   Vite para contornar isso. Para expor a API a um frontend em produção
   hospedado em outro domínio, adicione o middleware `cors` em `index.js`.
-- Quando hospedada no Render free tier, a API pode ter **cold start de
-  ~20s** após período ocioso.
+- Se for hospedada em free tier (Render, Fly.io etc.), considere o
+  **cold start de ~20s** após período ocioso — vale expor um endpoint
+  `/health` leve para warm-up.
 - A rota `DELETE /user/delete/:id` só responde se `id` == `req.userId`;
   caso contrário, o `try` cai no final da função sem resposta explícita
   (resulta em timeout do lado do cliente).
