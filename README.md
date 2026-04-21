@@ -4,11 +4,6 @@ API REST do FinanceApp, sistema de gestão financeira pessoal. Permite
 cadastrar receitas/despesas, consultar saldo, filtrar transações e obter
 os dados agregados usados pelos gráficos do dashboard.
 
-Hospedada em **https://sistema-financero-js.onrender.com**.
-
-O frontend React que consome esta API vive em
-[`../financeapp-frontend/`](../financeapp-frontend) (projeto irmão).
-
 ## 🚀 Funcionalidades
 
 - **Autenticação JWT** — access token (15 min) + refresh token (7 dias),
