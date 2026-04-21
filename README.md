@@ -38,8 +38,8 @@ O frontend React que consome esta API:
 Pré-requisitos: Node.js 18+ e uma string de conexão PostgreSQL.
 
 ```bash
-git clone https://github.com/pedroszdev/Api-sistema-financero-js.git
-cd Api-sistema-financero-js
+git clone https://github.com/pedroszdev/financeApp-api.git
+cd financeApp-api
 npm install
 cp .env.example .env   # edite com suas credenciais — ver abaixo
 npm run dev            # nodemon index.js
@@ -159,7 +159,7 @@ retornada por `GET /transacoes`, mas não é populada automaticamente.
 ## 🏗️ Estrutura do projeto
 
 ```
-Api-sistema-financero-js/
+financeApp-api/
 ├── index.js              # entrypoint (Express + bearer token + router)
 ├── router.js             # mapa de rotas
 ├── Controller/
