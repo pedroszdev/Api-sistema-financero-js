@@ -3,11 +3,10 @@ const route = express.Router();
 import HomeController from "./Controller/HomeController.js";
 import { homeTransacoes } from "./Controller/TransacoesController.js";
 import {
-  HomeProduto,
   CadastrarTransacao,
-  EditIndex,
   EditarTransacao,
   ApagarTransacao,
+  GetTransacao,
 } from "./Controller/TransacaoController.js";
 import {
   CadastroUser,
@@ -25,9 +24,8 @@ route.get("/", LoginRequired, HomeController);
 route.get("/transacoes", LoginRequired, homeTransacoes);
 
 //CRUD transacao
-route.get("/transacao", LoginRequired, HomeProduto);
 route.post("/transacao", LoginRequired, CadastrarTransacao);
-route.get("/transacao/:id", LoginRequired, EditIndex);
+route.get("/transacao/:id", LoginRequired, GetTransacao);
 route.post("/transacao/edit/:id", LoginRequired, EditarTransacao);
 route.delete("/transacao/delete/:id", LoginRequired, ApagarTransacao);
 
